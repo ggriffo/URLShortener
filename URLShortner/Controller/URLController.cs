@@ -73,6 +73,16 @@ public class URLController : Controller
         }
     }
 
+    [HttpDelete]
+    public async Task<IActionResult> Delete()
+    {
+        _context.Items.RemoveRange(_context.Items.Where(x => x.CreatedDate < DateTime.Now.AddDays(-30)));
+
+        await _context.SaveChangesAsync();
+
+        return Ok();        
+    }
+
     private string GenerateToken() {
         string  urlsafe = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789";
         return urlsafe.Substring(new  Random().Next(0, urlsafe.Length), new  Random().Next(2, 6));
