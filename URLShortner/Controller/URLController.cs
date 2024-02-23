@@ -43,7 +43,7 @@ public class URLController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(string urlAddress)
+    public async Task<IActionResult> Create([FromBody]string urlAddress)
     {
         if (_context.Items.Where(c => c.FullURL == urlAddress).FirstOrDefault() == null)
         {
