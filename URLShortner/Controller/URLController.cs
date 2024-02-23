@@ -32,6 +32,10 @@ public class URLController : Controller
             return NotFound();
         }
 
+        url.Clicked ++;
+        _context.Update(url);
+        await _context.SaveChangesAsync();
+
         url.HashURL = configuration.GetSection("Application").GetSection("BaseUrl").Value + url.HashURL;
 
         return url;
