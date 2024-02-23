@@ -21,8 +21,9 @@ public class URLController : Controller
         configuration = iConfig;
     }
 
-    [HttpGet("hashUrl")]
-    public async Task<ActionResult<URLModel>> GetURL(string hashUrl)
+    [HttpGet]
+    [Route("{hashUrl}")]
+    public async Task<ActionResult<URLModel>> GetURL([FromRoute]string hashUrl)
     {
         //TODO: Implement REDIS cache
         var url = await this._context.FindAsync<URLModel>(hashUrl);
