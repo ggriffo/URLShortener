@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 namespace URLShortner;
 
 [ApiController]
-[Route("[controller]")]
+[Route("")]
 public class URLController : Controller
 {
     private readonly DataBaseContext _context;
@@ -37,7 +37,7 @@ public class URLController : Controller
         _context.Update(url);
         await _context.SaveChangesAsync();
 
-        url.HashURL = configuration["Application:BaseUrl"];
+        url.HashURL = configuration["Application:BaseUrl"] + hashUrl;
 
         return url;
     }
