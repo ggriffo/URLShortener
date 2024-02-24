@@ -22,8 +22,8 @@ jobs:
           dotnet-version: '8.x'
           include-prerelease: true
 
-      - name: Build with dotnet
-        run: dotnet build --configuration Release
+      - name: Build WEB Api with dotnet
+        run: dotnet build URLShortner --configuration Release
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
