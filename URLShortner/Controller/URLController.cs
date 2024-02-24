@@ -37,7 +37,7 @@ public class URLController : Controller
         _context.Update(url);
         await _context.SaveChangesAsync();
 
-        url.HashURL = configuration.GetSection("Application").GetSection("BaseUrl").Value + url.HashURL;
+        url.HashURL = configuration["Application:BaseUrl"];
 
         return url;
     }

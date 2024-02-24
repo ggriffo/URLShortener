@@ -22,8 +22,8 @@ internal class Program
         builder.Services.AddSwaggerGen();
         builder.Services.AddControllers();
         builder.Services.AddDbContext<DataBaseContext>(x => x.UseCosmos(
-            connectionString: builder.Configuration.GetSection("CosmosDB").GetValue<string>("ConnectionString"),
-            databaseName: builder.Configuration.GetSection("CosmosDB").GetValue<string>("DatabaseName")
+            connectionString: builder.Configuration["CosmosDb:ConnectionString"],
+            databaseName: builder.Configuration["CosmosDb:DataBaseName"]
         ));
 
         var app = builder.Build();
