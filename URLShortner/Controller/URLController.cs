@@ -43,34 +43,36 @@ public class URLController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody]string urlAddress)
+    public async Task<ActionResult<URLModel>> Create(string urlAddress)
     {
         if (_context.Items.Where(c => c.FullURL == urlAddress).FirstOrDefault() == null)
         {
-            Regex validataUrl = new Regex(UrlRegex);
+            Regex validateUrl = new Regex(UrlRegex);
 
-            if (!validataUrl.IsMatch(urlAddress))
+            if (!validateUrl.IsMatch(urlAddress))
             {
                 return BadRequest();
             }
 
+            string token =  GenerateToken();
+
             URLModel urlModel = new()
             {
                 FullURL = urlAddress,
-                HashURL =  GenerateToken(),
+                HashURL =  token,
                 Clicked = 0,
                 CreatedDate = DateTime.Now
             };
 
-
             _context.Add<URLModel>(urlModel);
             await _context.SaveChangesAsync();
 
-            return new OkObjectResult(urlModel);
+            return await GetURL(token);
         }
         else
         {
-            return new OkObjectResult(await _context.Items.FirstAsync<URLModel>(x => x.FullURL == urlAddress));
+            var first = await _context.Items.FirstAsync<URLModel>(x => x.FullURL == urlAddress);
+            return await GetURL(first.HashURL);
         }
     }
 
@@ -86,13 +88,7 @@ public class URLController : Controller
 
     private string GenerateToken() {
         string  urlsafe = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789";
-        return urlsafe.Substring(new  Random().Next(0, urlsafe.Length), new  Random().Next(2, 6));
-        // Enumerable.Range(48, 75)
-        //     .Where(i => i < 58 || i > 64 && i < 91 || i > 96)
-        //     .OrderBy(o => new Random().Next())
-        //     .ToList()
-        //     .ForEach(i => urlsafe += Convert.ToChar(i)); // Store each char into urlsafe
-        // return urlsafe.Substring(new Random().Next(0, urlsafe.Length), new Random().Next(2, 6));
+        return urlsafe.Substring(new  Random().Next(0, urlsafe.Length), new  Random().Next(2, 8));
     }
     private string ByteArrayToString(byte[] arrInput)
     {

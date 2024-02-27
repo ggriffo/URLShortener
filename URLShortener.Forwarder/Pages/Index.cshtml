@@ -5,6 +5,21 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome to the newest URL Shortener</h1>
+        <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="URLModel.FullURL"for="urlAddress" class="control-label">URL</label>
+                <input asp-for="URLModel.FullURL" type="text" id="urlAddress" name="urlAddress" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+            <div class="form-group">
+                <label asp-for="URLModel.HashURL" class="control-label"></label>
+                <input asp-for="URLModel.HashURL" type="text" id="hashAddress" name="hashAddress" class="form-control" />
+            </div>
+        </form>
+    
 </div>
